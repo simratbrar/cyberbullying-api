@@ -9,15 +9,13 @@ from nltk import word_tokenize
 from nltk.stem import PorterStemmer
 import numpy as np
 import pandas as pd
-import spacy
 
 LETTERS = 'abcdefghijklmnopqrstuvwxyz'
 
 POSITIVE_WORD_COUNT = 20413
 NEGATIVE_WORD_COUNT = 58464
 LOG_PRIOR = -1.5912126357837744
-sp = spacy.load('en_core_web_sm')
-stopwords_set = sp.Defaults.stop_words
+stopwords_set = {'when', 'again', 'other', 'only', 'can', 'however', 'that', 'were', 'do', 'former', '’ll', 'before', 'therefore', 'namely', 'whither', 'thus', 'whereafter', 'yours', 'just', 'among', 'last', 'still', 'quite', '‘ll', "'s", 'cannot', 'became', 'hers', 'of', 'six', 'both', 'see', '’ve', 'because', 'whereas', 'nobody', 'her', 'anyone', 'noone', 'either', 'hereby', 'over', 'its', 'besides', 'could', 'anywhere', '‘d', 'will', 'these', 'the', 'thereafter', 'eight', 'several', 'part', 'whoever', 'become', 'at', 'a', 'becoming', 'no', 'neither', 'myself', 'put', 'seem', 'third', 'as', 'though', 'two', 'on', 'down', 'yourselves', 'i', 'afterwards', 'during', 'something', 'who', 'beyond', 'name', 'well', 'did', 'out', 'herself', 'call', 'toward', 'once', 'made', 'anyhow', 'or', 'twelve', 'none', 'mine', 'perhaps', 'this', 'we', 'seems', 'about', 'towards', 'within', 'your', 'others', 'now', 'my', 'same', 'behind', 'also', 'five', 'would', 'throughout', 'becomes', 'doing', 'meanwhile', 'very', 'thru', 'why', 'sometimes', 'really', 'is', 'formerly', 'hereupon', 'onto', 'bottom', "'re", 'keep', '’m', 'fifty', 'been', 'get', 'whereupon', 'except', 're', 'enough', 'everywhere', 'somewhere', 'hereafter', 'fifteen', '’d', 'moreover', 'via', 'what', 'him', 'back', 'even', 'upon', 'above', 'being', 'too', 'due', 'empty', 'mostly', 'while', 'between', 'itself', '‘s', 'somehow', 'to', 'was', 'may', 'twenty', '‘re', 'latter', 'where', 'along', 'it', 'more', 'but', '‘m', 'much', 'nowhere', 'less', 'which', 'then', 'four', 'might', 'three', 'any', 'often', 'make', 'should', 'you', 'nothing', 'from', 'least', 'such', 'each', 'per', 'since', 'they', 'whose', 'another', 'wherever', 'against', 'move', 'done', 'thence', 'below', 'many', 'whether', 'ca', 'our', "'m", 'seemed', 'regarding', 'hence', 'me', 'otherwise', 'if', 'here', 'already', 'them', 'into', 'she', 'whence', 'have', 'wherein', 'off', 'be', 'various', 'say', 'someone', 'sometime', 'although', 'elsewhere', 'whatever', 'in', 'has', 'with', 'whom', "'ll", '‘ve', 'had', 'together', 'own', 'his', 'ever', 'whenever', 'their', 'most', 'through', 'few', 'ours', 'amount', 'full', 'yet', 'beforehand', "'ve", 'eleven', 'ourselves', 'further', 'until', 'everything', "'d", 'latterly', 'side', 'everyone', 'indeed', 'one', 'us', 'give', 'anything', '’re', 'there', 'whole', 'ten', 'go', 'and', 'sixty', 'am', 'amongst', 'herein', 'always', 'under', 'almost', 'those', 'anyway', 'so', 'across', 'nevertheless', 'he', 'than', 'rather', 'are', 'else', 'forty', 'therein', 'without', 'around', 'himself', 'unless', 'yourself', 'next', 'top', 'how', 'thereupon', 'some', 'thereby', 'every', 'used', 'themselves', '’s', 'take', 'for', 'please', 'after', 'first', 'beside', 'does', 'serious', 'alone', 'all', 'seeming', 'show', 'an', 'using', 'by', 'never', 'hundred', 'whereby', 'up', 'front', 'nine', 'must'}
 
 def filter_token(token):
     #remove multiple continuous recurring letters
